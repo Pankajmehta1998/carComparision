@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import CarCard from "../../Components/CarCard";
+import Loader from "../../Components/loader";
 // import Filters from "../components/Filters";
 // import ComparisonTable from "../components/ComparisonTable";
 
@@ -52,15 +53,15 @@ const Home = () => {
     setSelectedCars(selectedCars.filter((car) => car.id !== id));
   };
 
-  if (loading) return <p>Loading cars...</p>;
+  if (loading) return <Loader />;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <div>
       {/* <Filters onFilter={handleFilter} /> */}
       <div className="grid">
-        {filteredCars?.length>0 &&
-        <CarCard car={filteredCars} onCompare={handleCompare} />
+        {filteredCars?.length > 0 &&
+          <CarCard car={filteredCars} onCompare={handleCompare} />
         }
       </div>
       {/* {selectedCars.length > 0 && (

@@ -21,14 +21,13 @@ const CarCard = ({ car, onCompare }) => {
           <div key={index} className="bg-white rounded-lg shadow hover:shadow-md transition-shadow">
             <div className="relative p-6 pb-4">
               <img
-                src={car.image}
-                alt={`${car.brand} ${car.model}`}
+                src={car?.image}
+                alt={`${car?.model}`}
                 className="w-full h-[160px] object-contain mb-3"
               />
-              <h2 className="text-lg text-[#484848] font-medium mb-2">{`${car.model}`}</h2>
+              <h2 className="text-lg text-[#484848] font-medium mb-2">{`${car?.model}`}</h2>
               <div className="flex items-baseline mb-2">
-                <span className="text-[#484848] font-medium">Rs. {car.price} Lakh</span>
-                <span className="text-sm text-gray-500 ml-1">onwards</span>
+                <span className="text-[#484848] font-medium">Rs. {car?.price} Lakh</span>
               </div>
               <a
                 href="#"
@@ -39,10 +38,6 @@ const CarCard = ({ car, onCompare }) => {
             </div>
           </div>
         ))}
-      </div>
-
-      <div className="mt-12 border-t pt-8">
-        <h2 className="text-[26px] text-[#484848] font-semibold">All Brands</h2>
       </div>
     </div>
   );
