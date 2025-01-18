@@ -1,6 +1,6 @@
 import React from "react";
 
-const CarCard = ({ car, onCompare }) => {
+const CarCard = ({ car }) => {
   return (
     <div className="max-w-[1366px] mx-auto px-6 py-4">
       <div className="flex justify-between items-center mb-6">

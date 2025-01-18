@@ -6,7 +6,6 @@ import Filters from "../../Components/filters";
 const Home = () => {
   const [cars, setCars] = useState([]);
   const [filteredCars, setFilteredCars] = useState([]);
-  const [selectedCars, setSelectedCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -68,7 +67,7 @@ const Home = () => {
       <Filters onFilter={handleFilter} car={cars} />
       <div className="grid">
         {filteredCars?.length > 0 ? (
-          <CarCard car={filteredCars} onCompare={handleCompare} />
+          <CarCard car={filteredCars} />
         ) : (
           <p>No cars found matching your criteria.</p>
         )}
