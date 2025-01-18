@@ -20,13 +20,14 @@ const Filters = ({ onFilter, car }) => {
   };
 
   useEffect(() => {
-    if (car?.length) {
+    const cars = JSON.parse(localStorage.getItem("cars"));
+    if (cars?.length) {
       // Calculate unique brands
-      const uniqueBrands = [...new Set(car.map((item) => item?.make))];
+      const uniqueBrands = [...new Set(cars?.map((item) => item?.make))];
       setBrands(uniqueBrands);
 
       // Calculate unique car types
-      const uniqueCarTypes = [...new Set(car.map((item) => item?.transmission))];
+      const uniqueCarTypes = [...new Set(cars?.map((item) => item?.transmission))];
       setCarTypes(uniqueCarTypes);
     }
   }, [car]);
