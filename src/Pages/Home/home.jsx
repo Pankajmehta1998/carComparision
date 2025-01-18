@@ -18,7 +18,10 @@ const Home = () => {
           setCars(parsedData);
           setFilteredCars(parsedData);
         } else {
-          const response = await fetch("/api/v1/cars");
+          // for local proxy:
+          // const response = await fetch("/api/v1/cars");
+          // for production:
+          const response = await fetch("https://www.freetestapi.com/api/v1/cars");
           if (!response.ok) {
             throw new Error("Failed to fetch car data");
           }
