@@ -22,7 +22,7 @@ const CarCard = ({ car, onCompare }) => {
                 <span className="text-[#484848] font-medium"><strong>Brand:</strong> {car?.make}</span>
               </div>
               <div className="flex items-baseline mb-2">
-                <span className="text-[#484848] font-medium"><strong>Price: </strong>Rs. {car?.price} Lakh</span>
+                <span className="text-[#484848] font-medium"><strong>Price: </strong>{car?.price} Lakh</span>
               </div>
               <div className="flex items-baseline mb-2">
                 <span className="text-[#484848] font-medium"><strong>Transmission: </strong>{car?.transmission}</span>
