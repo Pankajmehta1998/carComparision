@@ -6,18 +6,22 @@ const Filters = ({ onFilter, car }) => {
   const [selectedCarType, setSelectedCarType] = useState("");
   const [brands, setBrands] = useState([]);
   const [carTypes, setCarTypes] = useState([]);
+  const [sortOrder, setSortOrder] = useState("");
 
   const handleApplyFilters = () => {
-    onFilter({
+    // Create filter object and pass it to the parent component
+    const filters = {
       priceRange,
       brand: selectedBrand,
       carType: selectedCarType,
-    });
+      sortOrder,
+    };
+    onFilter(filters);
   };
 
   useEffect(() => {
     if (car?.length) {
-      // Calculate unique brands only if car data is available
+      // Calculate unique brands
       const uniqueBrands = [...new Set(car.map((item) => item?.make))];
       setBrands(uniqueBrands);
 
@@ -78,6 +82,20 @@ const Filters = ({ onFilter, car }) => {
               {type}
             </option>
           ))}
+        </select>
+      </div>
+
+      {/* Sorting Dropdown */}
+      <div className="mb-4">
+        <label className="block text-gray-700 font-medium">Sort By Price:</label>
+        <select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+          className="w-full border rounded p-2"
+        >
+          <option value="">Default</option>
+          <option value="asc">Low to High</option>
+          <option value="desc">High to Low</option>
         </select>
       </div>
 

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import CarCard from "../../Components/CarCard";
 import Loader from "../../Components/loader";
 import Filters from "../../Components/filters";
-// import ComparisonTable from "../components/ComparisonTable";
 
 const Home = () => {
   const [cars, setCars] = useState([]);
@@ -14,20 +13,17 @@ const Home = () => {
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        // Check if data exists in localStorage
         const cachedData = localStorage.getItem("cars");
         if (cachedData) {
           const parsedData = JSON.parse(cachedData);
           setCars(parsedData);
           setFilteredCars(parsedData);
         } else {
-          // If no cached data, fetch from API
           const response = await fetch("/api/v1/cars");
           if (!response.ok) {
             throw new Error("Failed to fetch car data");
           }
           const data = await response.json();
-          // Cache data to localStorage
           localStorage.setItem("cars", JSON.stringify(data));
           setCars(data);
           setFilteredCars(data);
@@ -43,25 +39,25 @@ const Home = () => {
   }, []);
 
   const handleFilter = (filters) => {
-    const { priceRange, brand, carType } = filters;
-    const filtered = cars.filter(
+    const { priceRange, brand, carType, sortOrder } = filters;
+
+    // Filter cars based on price range, brand, and car type
+    let filtered = cars.filter(
       (car) =>
         car?.price >= priceRange[0] &&
         car?.price <= priceRange[1] &&
-        (!brand || car?.make?.toLowerCase().includes(brand?.toLowerCase())) && (!carType || car?.transmission?.toLowerCase().includes(carType?.toLowerCase()))
+        (!brand || car?.make?.toLowerCase().includes(brand?.toLowerCase())) &&
+        (!carType || car?.transmission?.toLowerCase().includes(carType?.toLowerCase()))
     );
-    console.log("filtered: ", filtered)
-    setFilteredCars(filtered);
-  };
 
-  const handleCompare = (car) => {
-    if (!selectedCars.some((c) => c.id === car.id)) {
-      setSelectedCars([...selectedCars, car]);
+    // Sort cars based on selected sorting order
+    if (sortOrder === "asc") {
+      filtered = filtered.sort((a, b) => a.price - b.price);
+    } else if (sortOrder === "desc") {
+      filtered = filtered.sort((a, b) => b.price - a.price);
     }
-  };
 
-  const handleRemove = (id) => {
-    setSelectedCars(selectedCars.filter((car) => car.id !== id));
+    setFilteredCars(filtered);
   };
 
   if (loading) return <Loader />;
@@ -69,15 +65,14 @@ const Home = () => {
 
   return (
     <div>
-      <Filters onFilter={handleFilter} car={filteredCars} />
+      <Filters onFilter={handleFilter} car={cars} />
       <div className="grid">
-        {filteredCars?.length > 0 &&
+        {filteredCars?.length > 0 ? (
           <CarCard car={filteredCars} onCompare={handleCompare} />
-        }
+        ) : (
+          <p>No cars found matching your criteria.</p>
+        )}
       </div>
-      {/* {selectedCars.length > 0 && (
-        <ComparisonTable selectedCars={selectedCars} onRemove={handleRemove} />
-      )} */}
     </div>
   );
 };
